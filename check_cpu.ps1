@@ -1,7 +1,7 @@
 param($w="80",$c="90")
 
 $cpu_usage = (Get-WmiObject win32_processor | Measure-Object -property LoadPercentage -Average | Select -ExpandProperty Average)
-$time_var = "$(([DateTimeOffset](Get-Date)).ToUnixTimeMilliseconds())000000"
+$time_var = "$(([DateTimeOffset]([DateTime]::UtcNow)).ToUniversalTime().ToUnixTimeMilliseconds())000000"
 # Edge cases (if for some reason disk percent is beyond what it should be)
 if ($cpu_usage -lt 0 -or $cpu_usage -gt 100) {
 	Write-Host "cpu,status=UNKNOWN,cpu_usage=$cpu_usage $time_var"
