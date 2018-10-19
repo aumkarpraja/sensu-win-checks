@@ -8,18 +8,18 @@ $disk_percent = [math]::Round(($disk_used / $disk_total) * 100)
 
 # Edge cases (if for some reason disk percent is beyond what it should be)
 if ($disk_percent -lt 0 -or $disk_percent -gt 100) {
-	Write-Host "UNKNOWN: $disk_percent%"
+	Write-Host "status=unknown,disk_usage=$disk_percent"
 }
 
 if ($disk_percent -le $w -and $disk_percent -gt $c){
-	Write-Host "WARN: $disk_percent%"
+	Write-Host "status=warn,disk_usage=$disk_percent"
 	Exit 1
 }
 elseif ($disk_percent -le $c) {
-	Write-Host "CRIT: $disk_percent%"
+	Write-Host "status=crit,disk_usage=$disk_percent"
 	Exit 2
 }
 else {
-	Write-Host "OK: $disk_percent%"
+	Write-Host "status=ok,diskusage=$disk_percent"
 	Exit 0
 }
